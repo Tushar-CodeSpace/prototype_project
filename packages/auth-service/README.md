@@ -1,4 +1,4 @@
-# prototype
+# auth-service
 
 To install dependencies:
 
