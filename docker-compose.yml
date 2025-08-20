@@ -1,7 +1,9 @@
+version: "3.9"
+
 services:
   mongo:
     image: mongo:6.0
-    container_name: mongodb
+    container_name: mongo
     ports:
       - "27017:27017"
     environment:
@@ -9,10 +11,16 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: admin@123
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--username", "admin", "--password", "admin@123", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   mongo-express:
     image: mongo-express
-    container_name: mongo_express
+    container_name: mongo-express
     ports:
       - "8081:8081"
     environment:
@@ -22,59 +30,53 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: admin@123
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.5.0
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-
-  kafka:
-    image: confluentinc/cp-kafka:7.5.0
-    container_name: kafka
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zookeeper
-
-  kafdrop:
-    image: obsidiandynamics/kafdrop:latest
-    container_name: kafdrop
-    ports:
-      - "9000:9000"
-    environment:
-      KAFKA_BROKERCONNECT: kafka:9092
-      JVM_OPTS: "-Xms32M -Xmx64M"
-      SERVER_SERVLET_CONTEXTPATH: "/"
-    depends_on:
-      - kafka
-
-  auth-service:
+  logger-service:
     build:
-      context: ./packages/auth-service
+      context: ./packages/logger-service
       dockerfile: Dockerfile
-    container_name: auth_service
+    container_name: logger-service
     ports:
-      - "8000:8000"
+      - "8011:8011"
     environment:
+      PORT: 8011
+      MONGO_URI: mongodb://admin:admin%40123@mongo:27017/
+      IS_LOCAL_LOGGING: "true"
       LOG_DIR: /logs
+      IS_REMOTE_LOGGING: "true"
     depends_on:
-      - mongo
-      - kafka
+      mongo:
+        condition: service_healthy
     volumes:
       - ./logs:/logs
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
 
+  auth-service:
+    build:
+      context: ./packages/auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "8000:8000"
+    environment:
+      PORT: 8000
+      IS_LOCAL_LOGGING: "true"
+      LOG_DIR: /logs
+      IS_REMOTE_LOGGING: "true"
+      REMOTE_LOGGER_URL: "http://logger-service:8011/api/log"
+      MONGO_URI: mongodb://admin:admin%40123@mongo:27017/
+    depends_on:
+      logger-service:
+        condition: service_started
+      mongo:
+        condition: service_healthy
+    volumes:
+      - ./logs:/logs
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
 
 volumes:
   mongo_data:
