@@ -1,8 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
-import logger from './utils/logger';
-import authRouter from './routes/auth.routes';
+import logger from './src/utils/logger';
+import authRouter from './src/routes/auth.routes';
 
 dotenv.config({ quiet: true });
 const app = express();
