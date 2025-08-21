@@ -106,10 +106,3 @@ docker-compose up --build
 ## 📜 License
 
 MIT License © 2025 [Tushar-CodeSpace](https://github.com/Tushar-CodeSpace)
-
-```
-
-✅ This is **one single file** — you can copy-paste directly into your `README.md`.  
-
-Do you also want me to include **sample request/response bodies** (JSON for login, logs, etc.) in this same file so new devs can test endpoints instantly with Postman?
-```
