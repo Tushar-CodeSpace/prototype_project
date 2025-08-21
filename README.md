@@ -3,9 +3,14 @@
 ![License: All Rights Reserved](https://img.shields.io/badge/license-All%20Rights%20Reserved-red.svg)
 ![Kafka: WIP](https://img.shields.io/badge/Kafka-WIP-orange)
 
-A scalable, modular **microservice architecture** built with **Bun.js**, **Express**, **Mongoose**, **Kafka (WIP)**, and **Docker Compose**.  
-Designed for **rapid prototyping**, **robust logging**, and **seamless observability** across distributed services.
+Prototype Project is a **scalable microservice-based architecture** built with **Bun.js**, **Express**, **MongoDB**, and **Docker Compose**, with planned integration of **Kafka** and additional distributed services.  
+This repository is designed as a foundation for building **modular, event-driven systems** with a focus on:
+- 🚀 **Rapid prototyping** for new ideas.  
+- 📡 **Extensibility** to add new services without breaking existing ones.  
+- 🏗 **Scalability** to support future workloads and cloud-native deployment.  
+- 🔎 **Observability** through centralized logging, monitoring, and service discovery.  
 
+Future roadmap includes more microservices (inventory, notifications, analytics), deeper Kafka event streaming, and full observability stack integration.
 ---
 
 ## 🚀 Features
