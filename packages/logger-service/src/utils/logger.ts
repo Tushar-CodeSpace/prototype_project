@@ -30,14 +30,14 @@ const isRemoteLoggingEnabled = process.env.IS_REMOTE_LOGGING === "true";
 const isLocalLoggingEnabled = process.env.IS_LOCAL_LOGGING === "true";
 const serviceName = process.env.SERVICE_NAME;
 
-const systemMetadata = {
-    hostname: os.hostname(),
-    platform: os.platform(),
-    arch: os.arch(),
-    ip: Object.values(os.networkInterfaces())
-        .flat()
-        .find((iface) => iface && iface.family === "IPv4" && !iface.internal)?.address || "unknown"
-};
+// const systemMetadata = {
+//     hostname: os.hostname(),
+//     platform: os.platform(),
+//     arch: os.arch(),
+//     ip: Object.values(os.networkInterfaces())
+//         .flat()
+//         .find((iface) => iface && iface.family === "IPv4" && !iface.internal)?.address || "unknown"
+// };
 
 // Custom format with optional remote logging
 const customFormat = printf(({ level, message, timestamp, stack }) => {
@@ -47,7 +47,9 @@ const customFormat = printf(({ level, message, timestamp, stack }) => {
             service: serviceName,
             level,
             message: stack || message,
-            metadata: { ...systemMetadata },
+            metadata: {
+                // ...systemMetadata 
+            },
             timestamp
         }).catch((err) => console.error("Logger-service error:", err.message));
     }

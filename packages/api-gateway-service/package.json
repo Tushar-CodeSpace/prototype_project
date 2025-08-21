@@ -1,0 +1,28 @@
+{
+  "name": "api-gateway-service",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun .",
+    "dev": "bun --watch ."
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/morgan": "^1.9.10"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "fs": "^0.0.1-security",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "path": "^0.12.7",
+    "winston": "^3.17.0"
+  }
+}

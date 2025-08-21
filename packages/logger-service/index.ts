@@ -8,9 +8,9 @@ import logRouter from './src/routes/log.routes';
 dotenv.config({ quiet: true });
 
 const app = express();
-// http://localhost:8011/api/log
+// http://localhost:8011/api/v1/
 app.use(express.json());
-app.use('/api', logRouter);
+app.use('/api/v1', logRouter);
 
 const startServer = async () => {
     await connectToDatabase();

@@ -10,7 +10,7 @@ const PORT = process.env.PORT;
 const SERVICE_NAME = process.env.SERVICE_NAME;
 
 app.use(express.json());
-app.use('/auth', authRouter);
+app.use('/api/v1/', authRouter);
 
 app.listen(PORT, () => {
     logger.info(`${SERVICE_NAME?.toUpperCase()} is running at port ${PORT}`)
