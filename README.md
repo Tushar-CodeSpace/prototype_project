@@ -1,6 +1,9 @@
-# 🧱 Prototype Project
+# 🧪 Prototype Project
 
-A scalable, modular **microservice architecture** built with **Bun.js**, **Express**, **Mongoose**, **Kafka**, and **Docker Compose**.  
+![License: All Rights Reserved](https://img.shields.io/badge/license-All%20Rights%20Reserved-red.svg)
+![Kafka: WIP](https://img.shields.io/badge/Kafka-WIP-orange)
+
+A scalable, modular **microservice architecture** built with **Bun.js**, **Express**, **Mongoose**, **Kafka (WIP)**, and **Docker Compose**.  
 Designed for **rapid prototyping**, **robust logging**, and **seamless observability** across distributed services.
 
 ---
@@ -14,7 +17,7 @@ Designed for **rapid prototyping**, **robust logging**, and **seamless observabi
 - **Advanced Logging**
   - Millisecond-precision logs with Winston.
   - Remote log storage in MongoDB via `logger-service`.
-- **Kafka Integration**
+- **Kafka Integration** ![WIP](https://img.shields.io/badge/WIP-orange)
   - Event-driven communication for extensibility.
   - Kafdrop UI for monitoring topics & partitions.
 - **MongoDB Stack**
@@ -28,15 +31,15 @@ Designed for **rapid prototyping**, **robust logging**, and **seamless observabi
 
 ## 🧰 Tech Stack
 
-| Layer            | Tools & Frameworks                          |
-|------------------|---------------------------------------------|
-| Runtime          | Bun.js, Node.js                             |
-| Web Server       | Express.js                                  |
-| Database         | MongoDB, Mongoose                           |
-| Messaging        | Kafka, Kafdrop       `WIP`                  |
-| Containerization | Docker Compose                              |
-| Logging          | Winston (custom formats, daily rotation)    |
-| Observability    | Remote logging, Kafdrop, Mongo Express      |
+| Layer            | Tools & Frameworks                                            |
+|------------------|---------------------------------------------------------------|
+| Runtime          | Bun.js, Node.js                                               |
+| Web Server       | Express.js                                                    |
+| Database         | MongoDB, Mongoose                                             |
+| Messaging        | Kafka, Kafdrop ![WIP](https://img.shields.io/badge/WIP-orange)|
+| Containerization | Docker Compose                                                |
+| Logging          | Winston (custom formats, daily rotation)                      |
+| Observability    | Remote logging, Kafdrop, Mongo Express                        |
 
 ---
 
@@ -57,21 +60,21 @@ docker-compose up --build
 
 ### 🔑 Auth Service (`auth-service` @ port **8001**)
 
-| Method | Endpoint          | Description       |
-| ------ | ----------------- | ----------------- |
-| POST   | `/api/v1/login`   | User login        |
-| POST   | `/api/v1/register`| User registration |
-| POST   | `/api/v1/logout`  | User logout       |
+| Method | Endpoint           | Description       |
+| ------ | ------------------ | ----------------- |
+| POST   | `/api/v1/login`    | User login        |
+| POST   | `/api/v1/register` | User registration |
+| POST   | `/api/v1/logout`   | User logout       |
 
 ---
 
 ### 📝 Logger Service (`logger-service` @ port **8011**)
 
-| Method | Endpoint                    | Description                       |
-| ------ | --------------------------- | --------------------------------- |
-| POST   | `/api/v1/log`               | Register a log in DB remotely     |
-| GET    | `/api/v1/logs`              | Get all recorded logs             |
-| GET    | `/api/v1/logs/:service_name`| Get logs filtered by service name |
+| Method | Endpoint                     | Description                       |
+| ------ | ---------------------------- | --------------------------------- |
+| POST   | `/api/v1/log`                | Register a log in DB remotely     |
+| GET    | `/api/v1/logs`               | Get all recorded logs             |
+| GET    | `/api/v1/logs/:service_name` | Get logs filtered by service name |
 
 ---
 
@@ -91,7 +94,7 @@ docker-compose up --build
 ## 📊 Observability
 
 * **Mongo Express** → [http://localhost:8081](http://localhost:8081)
-* **Kafdrop (Kafka UI)** → [http://localhost:9000](http://localhost:9000) `WIP`
+* **Kafdrop (Kafka UI)** → [http://localhost:9000](http://localhost:9000) ![WIP](https://img.shields.io/badge/WIP-orange)
 
 ---
 
@@ -100,9 +103,14 @@ docker-compose up --build
 * All services respect `.env` configs (ports, DB URIs, log endpoints).
 * `logger-service` should **start first**, then dependent services (`auth-service`, `api-gateway-service`).
 * The gateway handles **service discovery** internally via Docker network aliases.
+* Kafka integration is under development ![WIP](https://img.shields.io/badge/WIP-orange) — not all event-driven features may work yet.
 
 ---
 
 ## 📜 License
 
-MIT License © 2025 [Tushar-CodeSpace](https://github.com/Tushar-CodeSpace)
+Copyright © 2025 [Tushar-CodeSpace](https://github.com/Tushar-CodeSpace)
+**All rights reserved.**
+
+This project is made publicly available for **showcasing purposes only**.
+No permission is granted to **copy, modify, distribute, or use** the source code in any form without explicit written consent from the author.
