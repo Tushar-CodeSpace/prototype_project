@@ -1,10 +1,13 @@
 import express from "express";
+import cors from "cors";
 import config from "./src/config";
 import proxy from "./src/proxy";
 import logger from "./src/utils/logger";
 
 const app = express();
 app.use(express.json());
+app.use(cors({ origin: "*" }));
+
 // http://localhost:8001/api/v1/
 app.use("/auth", proxy(config.authServiceUrl!, "/api/v1"));
 // http://localhost:8011/api/v1/logs
