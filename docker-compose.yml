@@ -59,7 +59,9 @@ services:
       - "8001:8001"
     environment:
       PORT: 8001
+      IS_LOCAL_LOGGING: true
       LOG_DIR: /logs
+      IS_REMOTE_LOGGING: true
       REMOTE_LOGGER_URL: "http://api-gateway-service:8000/logger/log"
       MONGO_URI: mongodb://admin:admin%40123@mongo:27017/
     depends_on:

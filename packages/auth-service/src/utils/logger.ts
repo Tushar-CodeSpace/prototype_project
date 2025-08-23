@@ -2,6 +2,7 @@ import winston from "winston";
 import fs from "fs";
 import path from "path";
 import axios from "axios";
+import config from "../config";
 
 // Use local date in "YYYY-MM-DD" format (IST-safe)
 const dateStr = new Intl.DateTimeFormat("en-CA", {
@@ -13,15 +14,15 @@ const dateStr = new Intl.DateTimeFormat("en-CA", {
 
 const { combine, timestamp, printf, colorize, errors, splat } = winston.format;
 
-const logDir = path.join(process.cwd(), `${process.env.LOG_DIR || "logs"}`);
+const logDir = path.join(process.cwd(), config.logging.logDir);
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir, { recursive: true });
 }
 
-const isRemoteLoggingEnabled = process.env.IS_REMOTE_LOGGING === "true";
-const isLocalLoggingEnabled = process.env.IS_LOCAL_LOGGING === "true";
-const serviceName = process.env.SERVICE_NAME || "unknown-service";
-const remoteLoggerUrl = process.env.REMOTE_LOGGER_URL;
+const serviceName = config.serviceName;
+const isLocalLoggingEnabled = config.logging.isLocal === "true";
+const isRemoteLoggingEnabled = config.logging.isRemote === "true";
+const remoteLoggerUrl = config.logging.remoteLoggerUrl;
 
 // Custom format with optional remote logging
 const customFormat = printf(({ level, message, timestamp, stack }) => {
@@ -73,7 +74,7 @@ if (isLocalLoggingEnabled) {
 }
 
 const logger = winston.createLogger({
-    level: process.env.NODE_ENV === "production" ? "info" : "debug",
+    level: config.env === "production" ? "info" : "debug",
     format: combine(
         timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),
         errors({ stack: true }),
